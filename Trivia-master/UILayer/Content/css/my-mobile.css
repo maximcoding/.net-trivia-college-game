@@ -1,0 +1,159 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    font-stretch: normal;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.stylish-panel {
+    padding: 3% 0;
+    text-align: center;
+}
+
+th {
+    color: #f6f19b;
+}
+
+
+
+.stylish-panel > div {
+    box-shadow: rgba(0, 0, 0, 0.1) 3px 5px 5px 5px;
+    width: 90%;
+    height: auto;
+    max-width: 90% !important;
+    margin-left: 5%;
+    border-radius: 30px;
+}
+
+.ui-mini .ui-input-text input, .ui-mini .ui-input-search input, .ui-input-text.ui-mini input, .ui-input-search.ui-mini input, .ui-mini textarea.ui-input-text, textarea.ui-mini {
+    font-size: 15px;
+}
+
+
+
+ul.nav {
+    overflow: hidden;
+    position: fixed;
+    list-style: none;
+    width: 78%;
+    margin: 0 0%;
+    right: 5%;
+    bottom: 35%;
+    padding-right: 6%;
+    font-size: 28px;
+}
+
+// align left right buttons li {
+    border-color: red;
+    margin: 10%;
+    margin: 0 20%;
+}
+
+li.left {
+    float: left;
+}
+
+li.right {
+    float: right;
+}
+
+#left, #right {
+    -vendor-animation-duration: 1s;
+    -vendor-animation-delay: 0s;
+    -vendor-animation-iteration-count: infinite;
+}
+
+@media screen and (max-width: 250px) {
+    .ui-btn, .ui-icon-fa-angle-left {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (min-width: 251px) and (max-width: 650px) {
+    .ui-btn, .ui-icon-fa-angle-left {
+        font-size: 2em;
+    }
+}
+
+@media screen and (min-width: 650px) {
+    .ui-btn, .ui-icon-fa-angle-left {
+        font-size: 4em;
+    }
+}
+
+label.error {
+    float: left;
+    color: red;
+    padding-top: .5em;
+    vertical-align: top;
+    font-weight: bold;
+}
+
+.glyphicon {
+    width: 100%;
+    height: auto;
+    max-width: 80%;
+}
+
+.fileupload {
+    position: relative;
+    overflow: hidden;
+}
+
+    .fileupload input {
+        position: absolute;
+        top: 0;
+        right: 0; /* not left, because only the right part of the input seems to
+                 be clickable in some browser I can't remember */
+        cursor: pointer;
+        opacity: 0.0;
+        filter: alpha(opacity=0); /* and all the other old opacity stuff you
+                                 want to support */
+        font-size: 300px; /* wtf, but apparently the most reliable way to make
+                         a large part of the input clickable in most browsers */
+        height: 200px;
+    }
+
+
+.ui-input-btn input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-border-radius: inherit;
+    border-radius: inherit;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    opacity: .2;
+    color: #ffffff;
+    background-color: #EAAB28;
+}
+
+    .ui-input-btn input:hover {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-border-radius: inherit;
+        border-radius: inherit;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        cursor: pointer;
+        opacity: .2;
+        color: #ffffff;
+        background-color: #EAAB28;
+        padding: 2%;
+    }
+
+.logo {
+    padding: 2%;
+    text-align: center;
+}
+
+.ui-bar-a, .ui-page-theme-a .ui-bar-inherit, html .ui-bar-a .ui-bar-inherit, html .ui-body-a .ui-bar-inherit, html body .ui-group-theme-a .ui-bar-inherit {
+    background-color: #FFFFFF;
+    border-color: #FDFDFD;
+    color: #333;
+    text-shadow: 0 1px 0 #eee;
+    font-weight: 700;
+}

@@ -1,0 +1,35 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="TriviaGame.DesktopMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head runat="server">
+    <title>Smart Trivia Game</title>
+    <asp:ContentPlaceHolder ID="headContent" runat="server" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <%: Scripts.Render("~/javascript/Comet") %>
+    <%: Styles.Render("~/css/animate") %>
+    <%: Scripts.Render("~/javascript/myscripts") %>
+    <%: Styles.Render("~/css/Home") %>
+
+    <div class="page-header text-center">
+        <img class="displayed" style="width: 10%" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+    </div>
+</head>
+<body>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <hr />
+
+    <footer class="text-center">
+        <p>&copy; <%: DateTime.Now.Year %> Livshitz</p>
+    </footer>
+    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>

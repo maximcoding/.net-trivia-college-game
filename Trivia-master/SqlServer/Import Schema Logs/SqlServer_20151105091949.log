@@ -1,0 +1,77 @@
+05/11/2015 11:19:49	This log contains information about the import schema operation into project 'SqlServer' on computer 'PC' by user 'geo'.
+05/11/2015 11:19:49	Import of database schema has started.
+05/11/2015 11:20:02	Gathering database options
+05/11/2015 11:20:03	Gathering users
+05/11/2015 11:20:03	Gathering roles
+05/11/2015 11:20:03	Gathering application roles
+05/11/2015 11:20:03	Gathering role memberships
+05/11/2015 11:20:03	Gathering filegroups
+05/11/2015 11:20:03	Gathering full-text catalogs
+05/11/2015 11:20:03	Gathering assemblies
+05/11/2015 11:20:03	Gathering certificates
+05/11/2015 11:20:03	Gathering asymmetric keys
+05/11/2015 11:20:03	Gathering symmetric keys
+05/11/2015 11:20:03	Gathering encrypted symmetric keys
+05/11/2015 11:20:03	Gathering schemas
+05/11/2015 11:20:03	Gathering XML schema collections
+05/11/2015 11:20:03	Gathering user-defined data types
+05/11/2015 11:20:03	Gathering user-defined types
+05/11/2015 11:20:03	Gathering table types
+05/11/2015 11:20:03	Gathering unique keys for table types
+05/11/2015 11:20:03	Gathering primary keys for table types
+05/11/2015 11:20:03	Gathering indexes for table types
+05/11/2015 11:20:03	Gathering check constraints for table types
+05/11/2015 11:20:03	Gathering default constraints for table types
+05/11/2015 11:20:03	Gathering partition functions
+05/11/2015 11:20:03	Gathering partition schemes
+05/11/2015 11:20:03	Gathering functions
+05/11/2015 11:20:03	Gathering encrypted functions
+05/11/2015 11:20:03	Gathering aggregates
+05/11/2015 11:20:03	Gathering procedures
+05/11/2015 11:20:03	Gathering encrypted procedures
+05/11/2015 11:20:03	Gathering tables
+05/11/2015 11:20:03	Gathering primary keys
+05/11/2015 11:20:03	Gathering unique constraints
+05/11/2015 11:20:03	Gathering foreign keys
+05/11/2015 11:20:03	Gathering default constraints
+05/11/2015 11:20:03	Gathering check constraints
+05/11/2015 11:20:03	Gathering views
+05/11/2015 11:20:03	Gathering encrypted views
+05/11/2015 11:20:03	Gathering indexes
+05/11/2015 11:20:03	Gathering statistics
+05/11/2015 11:20:03	Gathering full-text index stoplists
+05/11/2015 11:20:03	Gathering search property lists
+05/11/2015 11:20:03	Gathering search properties
+05/11/2015 11:20:03	Gathering full-text indexes
+05/11/2015 11:20:03	Gathering column store indexes
+05/11/2015 11:20:03	Gathering spatial indexes
+05/11/2015 11:20:03	Gathering XML indexes
+05/11/2015 11:20:03	Gathering Selective XML indexes
+05/11/2015 11:20:03	Gathering encrypted triggers
+05/11/2015 11:20:03	Gathering triggers
+05/11/2015 11:20:03	Gathering encrypted and clr ddl triggers
+05/11/2015 11:20:03	Gathering ddl triggers
+05/11/2015 11:20:03	Gathering synonyms
+05/11/2015 11:20:03	Gathering defaults
+05/11/2015 11:20:03	Gathering data constraint uddt bindings
+05/11/2015 11:20:03	Gathering rules
+05/11/2015 11:20:03	Gathering data constraint uddt bindings
+05/11/2015 11:20:03	Gathering message types
+05/11/2015 11:20:03	Gathering queues
+05/11/2015 11:20:03	Gathering contracts
+05/11/2015 11:20:03	Gathering services
+05/11/2015 11:20:03	Gathering event notifications
+05/11/2015 11:20:03	Gathering remote service bindings
+05/11/2015 11:20:03	Gathering broker priorities
+05/11/2015 11:20:03	Gathering signatures
+05/11/2015 11:20:03	Gathering data compression options
+05/11/2015 11:20:03	Gathering sequence types
+05/11/2015 11:20:03	Gathering extended properties
+05/11/2015 11:20:04	Gathering credentials
+05/11/2015 11:20:04	Gathering logins
+05/11/2015 11:20:04	Gathering server audits
+05/11/2015 11:20:04	Scanning project for duplicate elements
+05/11/2015 11:20:04	Finished duplicate element processing
+05/11/2015 11:20:05	Finished importing database.
+05/11/2015 11:20:05	A summary of the import was saved to the following location: D:\Git\project\TriviaOnlineAsp\SqlServer\Import Schema Logs\SqlServer_20151105091949.log
+05/11/2015 11:20:05	Click Finish to continue...

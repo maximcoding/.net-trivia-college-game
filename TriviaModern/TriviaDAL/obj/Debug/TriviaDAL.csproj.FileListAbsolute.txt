@@ -1,0 +1,7 @@
+D:\Projects\TRIVIA\TriviaDAL\bin\Debug\TriviaDAL.dll
+D:\Projects\TRIVIA\TriviaDAL\bin\Debug\TriviaDAL.pdb
+D:\Projects\TRIVIA\TriviaDAL\bin\Debug\BCrypt.Net.dll
+D:\Projects\TRIVIA\TriviaDAL\bin\Debug\BCrypt.Net.xml
+D:\Projects\TRIVIA\TriviaDAL\obj\Debug\TriviaDAL.csprojResolveAssemblyReference.cache
+D:\Projects\TRIVIA\TriviaDAL\obj\Debug\TriviaDAL.dll
+D:\Projects\TRIVIA\TriviaDAL\obj\Debug\TriviaDAL.pdb

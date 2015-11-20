@@ -1,0 +1,64 @@
+﻿
+body {
+   background-color: #505050;
+
+   
+}
+
+.container{
+background-color:white;
+position:fixed !important;
+position:absolute;
+top:120px;
+right:0;
+bottom:10px;
+left:0;
+
+
+}
+.page-header{
+  text-align:center;
+  background-color:white;
+}
+.page-header h1{
+    color:indianred;
+}
+IMG.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+
+.nav-pills a{
+    color:darkslategray;
+    font-family:Broadway;
+
+
+}
+
+.nav-pills a:hover {
+    color: darkslategray;
+    border-radius: 0px;
+}
+
+.nav-pills .active a:hover {
+    color: Gold;
+    border-radius: 0px;
+}
+.nav>li>a:hover,
+.nav>li>a:focus {
+    text-decoration: none;
+    background-color: bisque;
+}
+
+.activen{
+
+     color: darkslategray;
+    border-radius: 0px;
+}
+
+#myIframe
+{
+    position: relative;
+    height: 90%;
+    width: 100%; 
+}

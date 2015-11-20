@@ -1,0 +1,32 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Mobile.master.cs" Inherits="TriviaGame.MobileMaster" %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head runat="server">
+    <asp:ContentPlaceHolder ID="headContent" runat="server" />
+    <title>Trivia Game</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/favicon.ico" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <%: Scripts.Render("~/javascript/modernizr") %>
+    <%: Scripts.Render("~/javascript/Comet") %>
+    <%: Styles.Render("~/css/animate") %>
+    <%: Styles.Render("~/css/my-mobile") %>
+    <%: Styles.Render("~/css/Home") %>
+    <%: Styles.Render("~/css/my-theme") %>
+    <%: Styles.Render("~/css/my-icons") %>
+</head>
+<body>
+    <asp:ContentPlaceHolder ID="MainContent" runat="server">
+    </asp:ContentPlaceHolder>
+    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
+    </asp:ContentPlaceHolder>
+</body>
+</html>
+
+
+
