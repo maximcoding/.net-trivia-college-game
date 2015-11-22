@@ -11,7 +11,13 @@ namespace TriviaGame.Views.Mobile
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+          //  if (!IsPostBack)
+       //    {
+       //         if (Request.QueryString["x"] != null)
+        //      {
+        //           CometClientProcessor.PushData(Request.QueryString["x"].ToString());
+       //        }
+       //     }
         }
     }
 }

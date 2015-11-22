@@ -18,8 +18,9 @@ namespace TriviaGame.Views.Desktop
         {
             Session.Clear();
             Session.RemoveAll();
-            Session.Abandon(); Response.Redirect("Home.aspx");
+            Session.Abandon();
             ExpireAllCookies();
+            Response.Redirect("Home.aspx");
         }
 
         private void ExpireAllCookies()

@@ -51,7 +51,7 @@ namespace DALayer.Services
             return DbConnection.executeQuery(query, sqlParameters, CommandType.Text);
         }
 
-        public static bool Update(Game game)
+        public bool Update(Game game)
         {
             string query = "UPDATE Game SET score=@Score,number_right_questions=@NumberRQ WHERE id=(SELECT MAX(id) FROM Game WHERE player_id=@PlayerId)";
             SqlParameter[] sqlParameters = new SqlParameter[3];
@@ -61,7 +61,7 @@ namespace DALayer.Services
             return DbConnection.executeQuery(query, sqlParameters, CommandType.Text);
         }
 
-        public static Game GetPlayersLastGameResult(int userId)
+        public Game GetPlayersLastGameResult(int userId)
         {
             var _userGames = new List<Game>();
             string query = "SELECT * FROM Game WHERE id=(SELECT MAX(id) FROM Game WHERE player_id=@UserId)";

@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Newtonsoft;
-
+using System.Windows;
 using DALayer.Models;
 using DALayer.Services;
 using DALayer.Helpers;
@@ -24,7 +24,6 @@ namespace TriviaGame.Views.Desktop
             {
                 SetDefaultView();
             }
-
         }
 
         private void SetDefaultView()
@@ -59,11 +58,9 @@ namespace TriviaGame.Views.Desktop
 
                 if (!_playerService.CheckIfExists(newPlayer))
                 {
-                    System.Threading.Thread.Sleep(1000);
                     // do stuff here to log the user in ... 
                     if (_playerService.Insert(newPlayer))
                     {
-                        System.Threading.Thread.Sleep(1000);
                         Login(newPlayer.email, newPlayer.password);
                     }
                 }
@@ -143,6 +140,8 @@ namespace TriviaGame.Views.Desktop
                 MultiView.ActiveViewIndex -= 1;
             }
         }
+
+
 
     }
 

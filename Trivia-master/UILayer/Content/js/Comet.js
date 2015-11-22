@@ -1,6 +1,6 @@
 
 var clientGuid
-var clientEmail
+var userId
 
 // $.ajax({}) //REMEMBER !! when its present = default async:true 
 
@@ -12,51 +12,11 @@ var gameId
 var scoreForQuestion
 var selectedAnswer
 var answerList = new Array();
-var gameStart = false;
 var trueCls = ["tada", "rubberBand", "pulse", "flash"];  //animation if true
 var falseCls = ["hinge", "shake", "swing", "wobble"];   // animation if false
 
-// When every window opens - its connecting
-$(document).ready(function () {
-    var str = window.location.href;
-    if (str.indexOf("?") < 0)
-        Connect();
-});
-// When every window close - its disconnecting
-$(window).unload(function () {
-    var str = window.location.href;
-    if (str.indexOf("?") < 0)
-        Disconnect();
-});
 
 
-function Connect() {
-    commandObj = {
-        "command": "CONNECT",
-        "userinfo": "userinfo"
-    };
-    jsonObject = JSON.stringify(commandObj);
-    $.ajax({
-        type: "POST",
-        url: pathToHandler,
-        data: jsonObject,
-        success: OnConnected,
-        error: ConnectionRefused
-    });
-}
-
-function Disconnect() {
-    commandObj = {
-        "command": "DISCONNECT",
-        "userinfo": "userinfo"
-    };
-    jsonObject = JSON.stringify(commandObj);
-    $.ajax({
-        type: "POST",
-        url: pathToHandler,
-        data: jsonObject
-    });
-}
 
 function OnConnected(result) {
     clientGuid = result;
@@ -81,6 +41,7 @@ function SendRequest() {
 
 // loop SendRequest to detect new Cliend GUID
 function ProcessResponse(result) {
+    console.log(result);
     $("#contentWrapper").html(result);
     SendRequest();
 }
@@ -92,8 +53,8 @@ function ConnectionRefused() {
 
 
 
-function getFreshUserInfo(clientEmail) {
-    var commandObj = { "command": "getUserInfo", "userinfo": clientEmail };
+function getFreshUserInfo(userId) {
+    var commandObj = { "command": "getUserInfo", "userinfo": userId };
     jsonObject = JSON.stringify(commandObj);
     $.ajax({
         type: 'POST',
@@ -132,7 +93,7 @@ function startGame() {
             type: 'POST',
             url: pathToHandler,
             data: '{"categoryId":"' + gameId + '" , "command": "startGame"}',
-            success: continueGame,
+            success: onSuccess,
             error: startGame
         });
     });
@@ -153,18 +114,21 @@ function continueGame(trueOrFalse, score) {
 
 
 function httpSendFormJSON(event) {
+    console.log("Sending JSON .." + getRawJson(this));
     $.ajax({
         async: true,
         type: 'POST',
-        //  contentType: "application/json; charset=utf-8",
         url: pathToHandler,
-        //  dataType: "json",
         data: getRawJson(this),   // jsonData,    //  JSON.stringify($(this).serializeArray()),     // JSON.stringify($(this).serializeArray()),
         success: onSuccess,
-        error: httpSendFormJSON
+        error: function () {
+            console.log('cant send json..');
+        }
     });
     event.preventDefault();
 }
+
+
 
 function getRawJson(form) {
     return JSON.stringify($(form).serializeArray().reduce(function (a, x) {
@@ -176,16 +140,12 @@ function getRawJson(form) {
 function onSuccess(data) {
     var alertOriginalState = $(".alert").clone();
     var result = JSON.parse(data);
+    console.log(result);
     // console.log(data);
     switch (result.status) {
-        case 100:  // login ok
-            alert(result.message);
-            break;
-
         case 404: // user not found
             alert(result.message);
             break;
-
         case 406: // registraion failed
             $("#alert").append(result.message)
             $(".alert").fadeIn(1000, function () {
@@ -205,29 +165,18 @@ function onSuccess(data) {
             break;
 
         case 200: // load games
-            console.log(result.listData);
             $.each(result.listData, function (index, game) {
                 $('#game').append('\n\
                  <div class="section current col-xs-6 col-sm-4 text-center"><br>\n\
                  <h2>' + game.category_name + '</h2><br<br>\n\
                 \n\<div id=" ' + game.category_game + ' " class="categg bejaviy">\n\
-                <a href="#ready" data-transition="flip" data-rel="popup" data-position-to="window">\n\
+                <a data-transition="flip" data-rel="popup" data-position-to="window">\n\
                <img  name="' + game.category_name + '" src ="/Content/img/' + game.picture + '" id="' + game.id + '" class ="pic rotated" style="cursor: pointer;" >\n\
                 </a></div>\n\<br><br><br></div>');
             });
             break;
 
-        case 1000: // logout
-            $("#alert").append("<br/>" + result.message)
-            $(".alert").fadeIn(1000, function () {
-                $(this).click(function () {
-                    location.href = 'Home.aspx';
-                });
-            });
-            break;
         case 10: // continue game
-            console.log(result);
-            gameStart = true;
             answerList = new Array();
             $('#gamesList').hide();
             $('#navbar').hide();
@@ -307,7 +256,7 @@ function onSuccess(data) {
                            <td>' + row.Picture + '</td>\n\
                            <td>' + row.Username + '</td>\n\
                            <td>' + row.Email + '</td>\n\
-                           <td>' + row.Registration_Date + '</td>\n\
+                           <td>' + myDateFormat(row.Registration_Date) + '</td>\n\
                            <td>' + row.TotalGames + '</td>\n\
                            <td>' + row.AverageScore + '</td>\n\
                            <td>' + row.TotalGames + '</td>\n\
@@ -320,9 +269,18 @@ function onSuccess(data) {
 
             var gamesTable = '';
             $.each(result.userGamesData, function (i, row) {
-                gamesTable += '<tr>\n\
+                var scoreHtml = '';
+                if (row.Score != 0) {
+                    gamesTable += '<tr class="success">\n\
                            <td>' + row.Game + '</td>\n\
-                           <td>' + row.Score + '</td>\n\
+                            <td>' + row.Score + '</td>\n\
+                           <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
+                           <td>' + row.Questions + '</td>\n\
+                          </tr>';
+                }
+                gamesTable += '<tr class="danger">\n\
+                           <td>' + row.Game + '</td>\n\
+                            <td>' + row.Score + '</td>\n\
                            <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
                            <td>' + row.Questions + '</td>\n\
                           </tr>';
@@ -387,8 +345,10 @@ $(document).on('click', '#closeAnsDiv .questionBtn', function () {
 
 //CHECK OPEN QUESTION
 $(document).keypress(function (e) {
+    console.log('cheking open question ..');
     var answersArr = new Array();
     if (e.which == 13 && $('#textAnswer').val()) { // if not empty and pressed enter
+        e.preventDefault();
         var enteredText = $('#textAnswer').val().toLowerCase();
         $.each(answerList, function (index, ans) {
             var ansStr = ans.answer.toLowerCase();

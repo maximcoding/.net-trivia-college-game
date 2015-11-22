@@ -20,46 +20,58 @@ namespace DALayer.Helpers
 {
     public static class DTableExtension
     {
-        private static Dictionary<Type, IList<PropertyInfo>> typeDictionary = new Dictionary<Type, IList<PropertyInfo>>();
+        private static Object _lockObjStatic; // locks only static not - thead-safe resourses
+        private static Dictionary<Type, IList<PropertyInfo>> typeDictionary;
+
+        static DTableExtension(){
+            _lockObjStatic = new object();
+            typeDictionary = new Dictionary<Type, IList<PropertyInfo>>();
+        }
        
         public static IList<PropertyInfo> GetPropertiesForType<T>()
         {
-            var type = typeof(T);
-            if (!typeDictionary.ContainsKey(typeof(T)))
+            lock (_lockObjStatic)
             {
-                typeDictionary.Add(type, type.GetProperties().ToList());
+                var type = typeof(T);
+                if (!typeDictionary.ContainsKey(typeof(T)))
+                {
+                    typeDictionary.Add(type, type.GetProperties().ToList());
+                }
+                return typeDictionary[type];
             }
-            return typeDictionary[type];
-
         }
 
         public static IList<T> ToAnyList<T>(this DataTable table) where T : new()
         {
-
-            IList<PropertyInfo> properties = typeof(T).GetProperties().ToList();
-            IList<T> result = new List<T>();
-
-            foreach (var row in table.Rows)
+            lock (_lockObjStatic)
             {
-                var item = CreateObjFromRow<T>((DataRow)row, properties);
-                result.Add(item);
-            }
+                IList<PropertyInfo> properties = typeof(T).GetProperties().ToList();
+                IList<T> result = new List<T>();
 
-            return result;
+                foreach (var row in table.Rows)
+                {
+                    var item = CreateObjFromRow<T>((DataRow)row, properties);
+                    result.Add(item);
+                }
+
+                return result;
+            }
         }
 
         public static T CreateObjFromRow<T>(DataRow row, IList<PropertyInfo> properties) where T : new()
         {
-
-            var _myObject = Activator.CreateInstance<T>(); // reflection api 
-            foreach (var property in properties) // ili typeof(T).GetProperties()
+            lock (_lockObjStatic)
             {
-                if (!object.Equals(row[property.Name], DBNull.Value))
+                var _myObject = Activator.CreateInstance<T>(); // reflection api 
+                foreach (var property in properties) // ili typeof(T).GetProperties()
                 {
-                    property.SetValue(_myObject, row[property.Name], null);
+                    if (!object.Equals(row[property.Name], DBNull.Value))
+                    {
+                        property.SetValue(_myObject, row[property.Name], null);
+                    }
                 }
+                return _myObject;
             }
-            return _myObject;
         }
 
     }

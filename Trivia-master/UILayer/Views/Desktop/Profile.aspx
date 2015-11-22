@@ -5,30 +5,37 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <form runat="server" id="profilePage">
-        <div id="contentWrapper">
-            <div class="navbar  navbar-custom">
-                <ul class="nav navbar-nav ">
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/Games.aspx") %>">Games</a></li>
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/Contact.aspx") %>">Contact</a></li>
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/About.aspx") %>">About</a></li>
-                    <li role="presentation">
-                        <asp:LinkButton ID="LogoutButton" runat="server" OnClick="Logout_Click">Logout</asp:LinkButton>
-                    </li>
-                </ul>
-            </div>
-            <div id="alert" style="display: none">
-                <a class="alert" href="#alert"></a>
-            </div>
+        <div class="container-fluid">
+            <div id="contentWrapper"></div>
+            <div class="container-fluid">
+                <div class="navbar  navbar-custom">
+                    <ul class="nav navbar-nav ">
+                        <li><a runat="server" href="~/Views/Desktop/Games.aspx">Games</a></li>
+                        <li><a runat="server" href="~/Views/Desktop/Contact.aspx">Contact</a></li>
+                        <li><a runat="server" href="~/Views/Desktop/About.aspx">About</a></li>
+                        <li>
+                            <asp:LinkButton ID="LogoutButton" runat="server" OnClick="Logout_Click">Logout</asp:LinkButton>
+                        </li>
+                    </ul>
+                </div>
+                <div id="alert" style="display: none">
+                    <a class="alert" href="#alert"></a>
+                </div>
+                <div class="panel-group" id="accordion">
+                    <div class="panel panel-primary" id="panel1">
 
-            <div data-role="content">
-                <div data-role="collapsible-set" id="collapsible-set-1">
-                    <div data-role="collapsible">
-                        <h4>Personal Info</h4>
-                        <div data-role="main" class="ui-content">
-                            <div class="ui-grid-a" id="userInfo">
-                                <table data-role="table" id="user-info-table" class="ui-responsive">
+                        <div class="panel-heading">
+                            <div class="panel-title" data-toggle="collapse"
+                                data-target="#collapseOne">
+                                <span class="label label-default" style="cursor: pointer">Personal Info</span>
+                            </div>
+                        </div>
+
+                        <div id="collapseOne" class="panel-collapse collapse in">
+                            <div class="panel-body" id="userInfo">
+                                <table class="table table-responsive" id="user-info-table">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-warning warning">
                                             <th>Picture</th>
                                             <th>Username</th>
                                             <th>Email</th>
@@ -39,27 +46,32 @@
                                             <th>Place</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="Acontent">
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                    <div data-role="collapsible">
-                        <h4>Games History</h4>
-                        <div data-role="main" class="ui-content">
-                            <div class="ui-grid-a" id="gameInfo">
-                                <table data-role="table" id="games-results-table" class="ui-responsive table-stripe">
+                    <div class="panel panel-primary" id="panel2">
+                        <div class="panel-heading">
+                            <div class="panel-title" data-toggle="collapse"
+                                data-target="#collapseTwo">
+                                <span class="label label-primary" style="cursor: pointer">Games Results</span>
+                            </div>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse in">
+                            <div class="panel-body" id="gameInfo">
+                                <table id="games-results-table" class="table table-striped">
                                     <thead>
-                                        <tr>
+                                        <tr class="text-warning warning">
                                             <th>Game Category</th>
                                             <th>Score</th>
                                             <th>Date Played</th>
                                             <th># Answered Questions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="Bcontent">
                                     </tbody>
                                 </table>
                             </div>
@@ -75,6 +87,11 @@
         $(document).ready(function () {
             $('#gameContent').hide();
             getFreshUserInfo();
+        });
+        var active = true;
+
+        $('#accordion').on('show.bs.collapse', function () {
+            if (active) $('#accordion .in').collapse('hide');
         });
     </script>
 </asp:Content>

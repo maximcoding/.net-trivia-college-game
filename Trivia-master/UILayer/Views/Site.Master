@@ -24,12 +24,10 @@
 <body>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
-    <hr />
-
-    <footer class="text-center">
+    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
+            <footer class="text-center">
         <p>&copy; <%: DateTime.Now.Year %> Livshitz</p>
     </footer>
-    <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
     </asp:ContentPlaceHolder>
 </body>
 </html>

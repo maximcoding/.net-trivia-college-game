@@ -487,7 +487,6 @@
     <Content Include="Views\Mobile\Games.aspx" />
     <Content Include="Views\Mobile\Home.aspx" />
     <Content Include="Views\Mobile\Profile.aspx" />
-    <Content Include="Views\Mobile\Register.aspx" />
     <Content Include="Views\Site.Master" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -597,13 +596,6 @@
     </Compile>
     <Compile Include="Views\Mobile\Profile.aspx.designer.cs">
       <DependentUpon>Profile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Mobile\Register.aspx.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\Mobile\Register.aspx.designer.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

@@ -164,14 +164,14 @@ input[type=search], textarea {
     -o-transition: all 0.30s ease-in-out;
     outline: none;
     padding: 3px 10px 3px 3px;
-    border: solid 52px #76ede6;
+    border: solid #76ede6;
 }
 
     input[type=search]:focus, textarea:focus {
         box-shadow: 0 0 5px rgba(81, 203, 238, 1);
         padding: 31px 5px 3px 3px;
-        margin: 5px 1px 3px 0px;
-        border: 65px solid rgba(81, 203, 238, 1);
+        margin: 1px 1px 3px 0px;
+        border: 1px solid rgba(81, 203, 238, 1);
     }
 
 
@@ -252,10 +252,11 @@ input[type=search], textarea {
  /* ALERT MESSAGE*/
 
  #alert {
-    position: relative;
+  position: absolute;
 }
 
 .alert {
+    position: absolute;
     padding:3%;
     text-align:center;
     padding-top:30px;
@@ -310,7 +311,23 @@ img {
         -o-transform: rotate(360deg);
         -ms-transform: rotate(360deg);
         transform: rotate(360deg);
-    }*/
+    }
 
+    .panel-primary>.panel-heading {
+    color: #fff;
+    background-color: #EE9739;
+    border-color: #EE9739;
+}
+
+
+ .message {
+  z-index: 100;
+  position: absolute;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  left: 150px;
+  top: 350px;
+}
 
 

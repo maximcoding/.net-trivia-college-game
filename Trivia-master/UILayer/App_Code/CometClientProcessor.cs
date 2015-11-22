@@ -25,7 +25,6 @@ public class CometClientProcessor
         _clientStateListStatic = new List<CometAsyncResult>();
     }
 
-    private CategoryService _categoryService;
     private QuestionService _questionService;
     private AnswerService _answerService;
     private GameService _gameService;
@@ -41,7 +40,6 @@ public class CometClientProcessor
     public CometClientProcessor()
     {
         // Dependency Injection (design pattern ) implementation/realization other class in Constructor
-        this._categoryService = new CategoryService();
         this._questionService = new QuestionService();
         this._answerService = new AnswerService();
         this._gameService = new GameService();
@@ -127,6 +125,7 @@ public class CometClientProcessor
     // Games allways the same content ..must be loaded one time only 
     public IList<Category> getGames(CometAsyncResult state)
     {
+       CategoryService _categoryService = new CategoryService();
         return _categoryService.GetAll();
     }
 
@@ -142,7 +141,7 @@ public class CometClientProcessor
         StaticMembers._game.played_date = DateTime.Now;
         StaticMembers._game.score = 0;
         StaticMembers._game.number_right_questions = 0;
-        StaticMembers._game.player_id = Convert.ToInt32(StaticMembers._userCookMail = state.HttpContext.Request.Cookies["userId"].Value);
+        StaticMembers._game.player_id = Convert.ToInt32(state.HttpContext.Request.Cookies["userId"].Value);
         if (_gameService.Insert(StaticMembers._game))
         {
             StaticMembers._questionNumber = 0;
@@ -175,8 +174,9 @@ public class CometClientProcessor
         }
     }
 
-    public static bool continueGame(Boolean nextIsPressed, int scoreForQuestion)
+    public bool continueGame(Boolean nextIsPressed, int scoreForQuestion)
     {
+        GameService _gameService = new GameService();
         if (nextIsPressed && (!StaticMembers._questionList.Count().Equals(0)))
         {
             StaticMembers.question = StaticMembers._questionList.First();
@@ -187,7 +187,7 @@ public class CometClientProcessor
             {
                 StaticMembers._game.number_right_questions += 1;
                 StaticMembers._game.score += scoreForQuestion;
-                GameService.Update(StaticMembers._game);
+                _gameService.Update(StaticMembers._game);
             }
         }
 

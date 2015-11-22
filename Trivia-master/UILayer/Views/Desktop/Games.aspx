@@ -5,30 +5,31 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <form id="gamePage" runat="server">
-        <div id="contentWrapper">
+        <div id="contentWrapper"></div>
+        <div class="container-fluid">
             <div class="navbar  navbar-custom">
                 <ul class="nav navbar-nav ">
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/Profile.aspx") %>">Profile</a></li>
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/Contact.aspx") %>">Contact</a></li>
-                    <li role="presentation"><a href="<%= Page.ResolveUrl("/Views/Desktop/About.aspx") %>">About</a></li>
-                    <li role="presentation">
+                    <li><a runat="server" href="~/Views/Desktop/Profile.aspx">Profile</a></li>
+                    <li><a runat="server" href="~/Views/Desktop/Contact.aspx">Contact</a></li>
+                    <li><a runat="server" href="~/Views/Desktop/About.aspx">About</a></li>
+                    <li>
                         <asp:LinkButton ID="LogoutButton" runat="server" OnClick="Logout_Click">Logout</asp:LinkButton>
                     </li>
                 </ul>
             </div>
 
 
-            <div class="alert" style="display: none">
-                <span id="alert"></span>
+            <div class="alert overplay" style="display: none">
+                <span id="alert" class="message"></span>
             </div>
 
-            <div class="container-fluid">
-            <div id="game" class="row"></div>
-                </div>
-            <div id="gameContent">
-                <table data-role="table" id="table-22" data-mode="columntoggle:none" class="ui-responsive table-stripe">
+            <div class="container-fluid" id="gamesList">
+                <div id="game" class="row"></div>
+            </div>
+            <div id="gameContent" class="container-fluid">
+                <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="text-warning warning">
                             <th data-priority="1">Points</th>
                             <th data-priority="2">Question</th>
                             <th data-priority="3">Game</th>
@@ -42,10 +43,10 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="ui-grid-solo">
-                    <div class="ui-block-a" id="questionContent">
+                <div>
+                    <div id="questionContent">
                     </div>
-                    <div data-role="controlgroup" id="answerContent" data-iconpos="left">
+                    <div id="answerContent">
                     </div>
                 </div>
             </div>
@@ -55,9 +56,20 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
     <%: Scripts.Render("~/javascript/myscripts") %>
     <script type="text/javascript">
+        // When every window opens - its connecting
         $(document).ready(function () {
+            var str = window.location.href;
+            if (str.indexOf("?") < 0) {
+                //      Connect();
+            }
             $('#gameContent').hide();
             getGames();
+        });
+        $(window).unload(function () {
+            var str = window.location.href;
+            if (str.indexOf("?") < 0) {
+                //    Disconnect();
+            }
         });
     </script>
 </asp:Content>
