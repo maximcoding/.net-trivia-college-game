@@ -19,7 +19,7 @@ using CometAsyncCode;
 using DALayer.Services;
 
 
-public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
+public class CometAsyncHandler : IHttpAsyncHandler, IHttpHandler, IRequiresSessionState
 {
 
     static private ThreadPool _threadPool;
@@ -83,11 +83,11 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
                 break;
 
             case "login":
-                    Login(_curAsyncResult, values["email"], values["password"]);
+                Login(_curAsyncResult, values["email"], values["password"]);
                 break;
 
             case "register":
-                    Register(_curAsyncResult, values["email"], values["username"], values["password"], values["passConfirm"]);             
+                Register(_curAsyncResult, values["email"], values["user"], values["pass"], values["passConfirm"]);
                 break;
 
 
@@ -100,6 +100,11 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
                 responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelper);
                 _curAsyncResult.HttpContext.Response.Headers.Add("Content-type", "application/json");
                 _curAsyncResult.HttpContext.Response.Write(responseJSON);
+                ExpireAllCookies();
+                _curAsyncResult.HttpContext.Session.Clear();
+                _curAsyncResult.HttpContext.Session.RemoveAll();
+                _curAsyncResult.HttpContext.Session.Abandon();
+                _curAsyncResult.HttpContext.Response.Redirect("Home.aspx",false); //true(default-stop thread)
                 _curAsyncResult.CompleteRequest();
                 break;
 
@@ -146,6 +151,7 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
                     responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelperQandAns);
                     _curAsyncResult.HttpContext.Response.Write(responseJSON);
                     _curAsyncResult.CompleteRequest();
+                    break;
                 }
                 // when games End - show last Game Result;
                 JsonHelper<Game> _jsonHelperGameResult = new JsonHelper<Game>();
@@ -158,6 +164,7 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
 
 
             case "getUserInfo":
+
                 string _email = _curAsyncResult.HttpContext.Session["Email"].ToString();
                 PlayerService playerService = new PlayerService();
                 Player player = playerService.FindByEmail(_email);
@@ -178,11 +185,7 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
         _playerService = new PlayerService();
         _jsonHelper = new JsonHelper<Object>();
         string responseJSON = null;
-        if (email != "" &&
-            user != "" &&
-            pass != "" &&
-            email != "" &&
-            pass == passConfirm)
+        if (pass == passConfirm)
         {
             Player newPlayer = new Player();
             newPlayer.email = email;
@@ -194,11 +197,9 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
 
             if (!_playerService.CheckIfExists(newPlayer))
             {
-                System.Threading.Thread.Sleep(1000);
                 // do stuff here to log the user in ... 
                 if (_playerService.Insert(newPlayer))
                 {
-                    System.Threading.Thread.Sleep(1000);
                     Login(clientState, newPlayer.email, newPlayer.password);
                 }
             }
@@ -213,9 +214,8 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
         }
         else
         {
-
             _jsonHelper.status = 406;
-            _jsonHelper.message = "All fields required Or passwords doesn't match!";
+            _jsonHelper.message = "Passwords doesn't match!";
             responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelper);
             HttpContext.Current.Response.Headers.Add("Content-type", "application/json");
             HttpContext.Current.Response.Write(responseJSON);
@@ -243,8 +243,8 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
             clientState.HttpContext.Response.Cookies.Add(time);
             clientState.HttpContext.Response.Cookies.Add(userEmail);
             clientState.HttpContext.Response.Cookies.Add(userId);
-            clientState.HttpContext.Session["Email"] = player.email;
-            clientState.HttpContext.Session["Username"] = player.username;
+            currentAsyncRequestState.HttpContext.Session["Email"] = player.email;
+            currentAsyncRequestState.HttpContext.Session["Username"] = player.username;
 
             _jsonHelper.message = "Welcome " + player.username + "!";
             _jsonHelper.status = 200;
@@ -260,6 +260,27 @@ public class CometAsyncHandler : IHttpAsyncHandler, IReadOnlySessionState
 
         }
         clientState.CompleteRequest();
+    }
+
+    private void ExpireAllCookies()
+    {
+        if (HttpContext.Current != null)
+        {
+            int cookieCount = HttpContext.Current.Request.Cookies.Count;
+            for (var i = 0; i < cookieCount; i++)
+            {
+                var cookie = HttpContext.Current.Request.Cookies[i];
+                if (cookie != null)
+                {
+                    var cookieName = cookie.Name;
+                    var expiredCookie = new HttpCookie(cookieName) { Expires = DateTime.Now.AddDays(-1) };
+                    HttpContext.Current.Response.Cookies.Add(expiredCookie); // overwrite it
+                }
+            }
+
+            // clear cookies server side
+            HttpContext.Current.Request.Cookies.Clear();
+        }
     }
 
     public void EndProcessRequest(System.IAsyncResult result)

@@ -1,7 +1,6 @@
 
 var clientGuid
 var userId
-
 // $.ajax({}) //REMEMBER !! when its present = default async:true 
 
 // GLOBAL PATH TO HANDLER
@@ -16,40 +15,6 @@ var trueCls = ["tada", "rubberBand", "pulse", "flash"];  //animation if true
 var falseCls = ["hinge", "shake", "swing", "wobble"];   // animation if false
 
 
-
-
-function OnConnected(result) {
-    clientGuid = result;
-    SendRequest();
-}
-
-// every time sends request to detect changes on the page ( if its new Client GUID)
-function SendRequest() {
-    commandObj = {
-        "command": "CLIENTGUID",
-        "ClientID": clientGuid
-    };
-    jsonObject = JSON.stringify(commandObj);
-    $.ajax({
-        type: "POST",
-        url: pathToHandler,
-        data: jsonObject,
-        success: ProcessResponse,
-        error: SendRequest
-    });
-}
-
-// loop SendRequest to detect new Cliend GUID
-function ProcessResponse(result) {
-    console.log(result);
-    $("#contentWrapper").html(result);
-    SendRequest();
-}
-
-function ConnectionRefused() {
-    $("#contentWrapper").html("Unable to connect to Comet server. Reconnecting in 5 seconds...");
-    setTimeout(Connect(), 5000);
-}
 
 
 
@@ -141,7 +106,6 @@ function onSuccess(data) {
     var alertOriginalState = $(".alert").clone();
     var result = JSON.parse(data);
     console.log(result);
-    // console.log(data);
     switch (result.status) {
         case 404: // user not found
             alert(result.message);
@@ -178,8 +142,8 @@ function onSuccess(data) {
 
         case 10: // continue game
             answerList = new Array();
-            $('#gamesList').hide();
-            $('#navbar').hide();
+            $('#gamesList').hide(1000);
+            $('#navbar').hide(1000);
             $('#gameContent').fadeIn(2000);
             $('#questionContent').empty();
             $('#questionContent').fadeIn(2000);
@@ -242,6 +206,7 @@ function onSuccess(data) {
                                   $('#gameContent').removeClass('animated zoomOut');
                                   $('#gamesList').show(1000);
                                   $('#navbar').show(1000);
+                                  $('#gameContent').fadeOut(2000);
                               }
                                );
                 });
@@ -270,20 +235,22 @@ function onSuccess(data) {
             var gamesTable = '';
             $.each(result.userGamesData, function (i, row) {
                 var scoreHtml = '';
-                if (row.Score != 0) {
-                    gamesTable += '<tr class="success">\n\
+                if (row.Score != 0) { // green if no zero 
+                    gamesTable += '<tr style="background-color:#B8FFA2">\n\
                            <td>' + row.Game + '</td>\n\
                             <td>' + row.Score + '</td>\n\
                            <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
                            <td>' + row.Questions + '</td>\n\
                           </tr>';
                 }
-                gamesTable += '<tr class="danger">\n\
+                else if(row.Score > 0 ){  //red if zero
+                    gamesTable += '<tr  style="background-color:#FF8C72">\n\
                            <td>' + row.Game + '</td>\n\
                             <td>' + row.Score + '</td>\n\
                            <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
                            <td>' + row.Questions + '</td>\n\
                           </tr>';
+                }
             });
             $('#games-results-table').find('tbody > tr').empty();
             $('#games-results-table').append(gamesTable);
@@ -296,17 +263,18 @@ function onSuccess(data) {
 
 //CHECK CLOSE QUESTION
 $(document).on('click', '#closeAnsDiv .questionBtn', function () {
+    console.log('checking close question ..');
     $("#answerContent :button").attr("disabled", true);
     var clickedButton = $(this);
     var randomAnim = "";
-    //  alert(clickedButton.text() + ' ' + clickedButton.attr('id'));
     $.each(answerList, function (index, ans) {
         if (index == clickedButton.attr('id')) {
             if (ans.is_right == true) {
                 randomAnim = trueCls[~~(Math.random() * trueCls.length)];
                 clickedButton.addClass(randomAnim)
                 clickedButton.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-                   function () { // removing animation when its end
+                   function () {
+                       //   removing animation when its end
                        //    var lastClass = clickedButton.attr('class').split(' ').pop();
                        console.log(randomAnim);
                        clickedButton.removeClass(randomAnim);
@@ -324,8 +292,9 @@ $(document).on('click', '#closeAnsDiv .questionBtn', function () {
                 randomAnim = falseCls[~~(Math.random() * falseCls.length)];
                 clickedButton.addClass(randomAnim)
                 clickedButton.on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
-                    function () { // removing animation when its end
-                        //     var lastClass = clickedButton.attr('class').split(' ').pop();
+                    function () {
+                        // removing animation when its end
+                        // var lastClass = clickedButton.attr('class').split(' ').pop();
                         console.log(randomAnim);
                         clickedButton.removeClass(randomAnim);
                         $(".alert").append("<p/>").css({ 'background-color': 'rgba(255, 0, 0, 0.4)', 'color': 'white', 'font-size': '26px' }).text('Wrong!');
@@ -345,10 +314,10 @@ $(document).on('click', '#closeAnsDiv .questionBtn', function () {
 
 //CHECK OPEN QUESTION
 $(document).keypress(function (e) {
-    console.log('cheking open question ..');
+    console.log('checking open question ..');
     var answersArr = new Array();
     if (e.which == 13 && $('#textAnswer').val()) { // if not empty and pressed enter
-        e.preventDefault();
+        e.preventDefault(); //prevent browser default deistvia stranici(v dannom sluch-getGames)
         var enteredText = $('#textAnswer').val().toLowerCase();
         $.each(answerList, function (index, ans) {
             var ansStr = ans.answer.toLowerCase();
@@ -396,6 +365,10 @@ function myDateFormat(date) {
     return year + "/" + month + "/" + day + "  " + hour + ":" + minute + ":" + second;
 }
 
+// Load every time when before profile page opens
+$(document).on("pagebeforeshow", "#profilePage", function () {
+    getFreshUserInfo();
+});
 
 
 

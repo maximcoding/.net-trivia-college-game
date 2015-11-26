@@ -14,7 +14,6 @@
 
     <%: Scripts.Render("~/javascript/modernizr") %>
     <%: Scripts.Render("~/javascript/Comet") %>
-    <%: Scripts.Render("~/javascript/myscripts") %>
     <%: Styles.Render("~/css/animate") %>
     <%: Styles.Render("~/css/my-mobile") %>
     <%: Styles.Render("~/css/Home") %>

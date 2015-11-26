@@ -15,7 +15,7 @@ namespace TriviaGame
             //Javascript
             bundles.Add(new ScriptBundle("~/javascript/Comet").Include("~/Content/js/Comet.js"));
             bundles.Add(new ScriptBundle("~/javascript/build-games").Include("~/Content/js/build-games.js"));
-            bundles.Add(new ScriptBundle("~/javascript/myscripts").Include("~/Content/js/myscripts.js"));
+            bundles.Add(new ScriptBundle("~/javascript/scrollAndRotate").Include("~/Content/js/scrollAndRotate.js"));
             bundles.Add(new ScriptBundle("~/javascript/zapas").Include("~/Content/js/zapas*"));
            
             // Javascript Frameworks

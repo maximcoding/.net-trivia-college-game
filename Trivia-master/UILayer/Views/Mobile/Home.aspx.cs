@@ -18,29 +18,13 @@ namespace TriviaGame.Views.Mobile
     public partial class Home : System.Web.UI.Page
     {
 
-        private JsonHelper<Object> _jsonHelper = null;
-        PlayerService _playerService = null;
-        private CometClientProcessor _cometProcessor;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack)
             {
-
-                if (Request.Form["username"] != "" &&
-                    Request.Form["passConfirm"] != "" &&
-                    Request.Form["email"] != "" &&
-                    Request.Form["password"] == Request.Form["passConfirm"]
-                   )
-                {
-                }
-                else if (Request.Form["email"] != null &&
-                   Request.Form["password"] != null)
-                {
-                }
             }
             return;
         }
-        //  Response.Redirect("Home.aspx");
     }
 }
 

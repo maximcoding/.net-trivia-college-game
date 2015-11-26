@@ -14,7 +14,6 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <%: Scripts.Render("~/javascript/Comet") %>
     <%: Styles.Render("~/css/animate") %>
-    <%: Scripts.Render("~/javascript/myscripts") %>
     <%: Styles.Render("~/css/Home") %>
 
     <div class="page-header text-center">
@@ -25,9 +24,9 @@
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
-            <footer class="text-center">
-        <p>&copy; <%: DateTime.Now.Year %> Livshitz</p>
-    </footer>
+        <footer class="text-center">
+            <p>&copy; <%: DateTime.Now.Year %> Livshitz</p>
+        </footer>
     </asp:ContentPlaceHolder>
 </body>
 </html>

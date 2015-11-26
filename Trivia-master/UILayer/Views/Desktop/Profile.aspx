@@ -85,7 +85,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#gameContent').hide();
+        //    $('#gameContent').hide();
             getFreshUserInfo();
         });
         var active = true;
@@ -93,5 +93,6 @@
         $('#accordion').on('show.bs.collapse', function () {
             if (active) $('#accordion .in').collapse('hide');
         });
+
     </script>
 </asp:Content>

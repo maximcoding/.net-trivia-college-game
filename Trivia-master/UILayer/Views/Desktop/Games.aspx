@@ -54,7 +54,7 @@
     </form>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
-    <%: Scripts.Render("~/javascript/myscripts") %>
+        <%: Scripts.Render("~/javascript/scrollAndRotate") %>
     <script type="text/javascript">
         // When every window opens - its connecting
         $(document).ready(function () {
@@ -71,5 +71,45 @@
                 //    Disconnect();
             }
         });
+
+
+        var clientGuid
+        var userId
+
+
+
+        function OnConnected(result) {
+            clientGuid = result;
+            SendRequest();
+        }
+
+        // every time sends request to detect changes on the page ( if its new Client GUID)
+        function SendRequest() {
+            commandObj = {
+                "command": "CLIENTGUID",
+                "ClientID": clientGuid
+            };
+            jsonObject = JSON.stringify(commandObj);
+            $.ajax({
+                type: "POST",
+                url: pathToHandler,
+                data: jsonObject,
+                success: ProcessResponse,
+                error: SendRequest
+            });
+        }
+
+        // loop SendRequest to detect new Cliend GUID
+        function ProcessResponse(result) {
+            console.log(result);
+            $("#contentWrapper").html(result);
+            SendRequest();
+        }
+        function ConnectionRefused() {
+            $("#contentWrapper").html("Unable to connect to Comet server. Reconnecting in 5 seconds...");
+            setTimeout(Connect(), 5000);
+        }
+
+
     </script>
 </asp:Content>

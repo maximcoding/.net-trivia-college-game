@@ -20,6 +20,8 @@ namespace TriviaGame.Views.Desktop
         private CometClientProcessor _cometProcessor;
         protected void Page_Load(object sender, EventArgs e)
         {
+
+
             if (!IsPostBack)
             {
                 SetDefaultView();
@@ -31,6 +33,9 @@ namespace TriviaGame.Views.Desktop
             MultiView.ActiveViewIndex = 0;
         }
 
+        protected void Hide_Click(object sender, EventArgs e)
+        {
+        }
 
         protected void Login_Click(object sender, EventArgs e)
         {
@@ -42,45 +47,27 @@ namespace TriviaGame.Views.Desktop
             _playerService = new PlayerService();
             _jsonHelper = new JsonHelper<Object>();
             string responseJSON = null;
-            if (RegisterUsername.Text != "" &&
-                RegisterPassword.Text != "" &&
-                RegisterPasswordConfirm.Text != "" &&
-                RegisterEmail.Text != "" &&
-                RegisterPassword.Text == RegisterPasswordConfirm.Text)
-            {
-                Player newPlayer = new Player();
-                newPlayer.username = RegisterUsername.Text;
-                newPlayer.email = RegisterEmail.Text;
-                // kod zashivrovali v settere 
-                newPlayer.password = RegisterPassword.Text;
-                newPlayer.image = "ehse netu picture";
-                newPlayer.registration_date = DateTime.Now;
+            Player newPlayer = new Player();
+            newPlayer.username = RegisterUsername.Text;
+            newPlayer.email = RegisterEmail.Text;
+            // kod zashivrovali v settere 
+            newPlayer.password = RegisterPassword.Text;
+            newPlayer.image = "ehse netu picture";
+            newPlayer.registration_date = DateTime.Now;
 
-                if (!_playerService.CheckIfExists(newPlayer))
+            if (!_playerService.CheckIfExists(newPlayer))
+            {
+                // do stuff here to log the user in ... 
+                if (_playerService.Insert(newPlayer))
                 {
-                    // do stuff here to log the user in ... 
-                    if (_playerService.Insert(newPlayer))
-                    {
-                        Login(newPlayer.email, newPlayer.password);
-                    }
-                }
-                else
-                {
-                    _jsonHelper.status = 405;
-                    _jsonHelper.message = "This email is registered,Please login or register another one";
-                    responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelper);
-                    HttpContext.Current.Response.Headers.Add("Content-type", "application/json");
-                    HttpContext.Current.Response.Write(responseJSON);
+                    Login(newPlayer.email, newPlayer.password);
                 }
             }
             else
             {
-
-                _jsonHelper.status = 406;
-                _jsonHelper.message = "All fields required Or passwords doesn't match!";
-                responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelper);
-                HttpContext.Current.Response.Headers.Add("Content-type", "application/json");
-                HttpContext.Current.Response.Write(responseJSON);
+                string message = "<div class='alert alert-warning'>This email is registered,Please login or register another one</div>";
+                Alert.Text = message;
+                Response.Redirect("Home.aspx");
             }
         }
 
@@ -90,8 +77,8 @@ namespace TriviaGame.Views.Desktop
             _cometProcessor = new CometClientProcessor();
             _playerService = new PlayerService();
             Player player = new Player();
-            player.password = LoginPass.Text;
-            player.email = LoginEmail.Text;
+            player.password = pass;
+            player.email = email;
             _playerService = new PlayerService();
             if (_playerService.Verify(player))
             {
@@ -105,16 +92,14 @@ namespace TriviaGame.Views.Desktop
                 HttpContext.Current.Response.Cookies.Add(time);
                 HttpContext.Current.Response.Cookies.Add(userEmail);
                 HttpContext.Current.Response.Cookies.Add(userId);
-                Session["Email"] = player.email;
-                Session["Username"] = player.username;
+                HttpContext.Current.Session["Email"] = player.email;
+                HttpContext.Current.Session["Username"] = player.username;
                 Response.Redirect("Games.aspx"); //if true - so code after this not working - its abort the thread
             }
             else
             {
-                _jsonHelper.message = "This email and password not found,Please register or try again";
-                _jsonHelper.status = 404;
-                string responseJSON = Newtonsoft.Json.JsonConvert.SerializeObject(_jsonHelper);
-                HttpContext.Current.Response.Write(responseJSON);
+                string message = "<div class='alert alert-warning'>This email and password not found,Please register or try again</div>";
+                Alert.Text = message;
             }
         }
 

@@ -28,5 +28,6 @@ D:\Projects\Trivia-master\DALayer\bin\Debug\Newtonsoft.Json.xml
 D:\Projects\Trivia-master\DALayer\bin\Debug\System.Net.Http.Formatting.xml
 D:\Projects\Trivia-master\DALayer\bin\Debug\System.Web.Http.xml
 D:\Projects\Trivia-master\DALayer\bin\Debug\System.Web.Http.Cors.xml
+D:\Projects\Trivia-master\DALayer\obj\Debug\DALayer.csprojResolveAssemblyReference.cache
 D:\Projects\Trivia-master\DALayer\obj\Debug\DALayer.dll
 D:\Projects\Trivia-master\DALayer\obj\Debug\DALayer.pdb

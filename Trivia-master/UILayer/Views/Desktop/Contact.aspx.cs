@@ -21,6 +21,10 @@ namespace TriviaGame.Views.Desktop
             ExpireAllCookies();
         }
 
+        protected void Submit_Click(object sender, EventArgs e)
+        {
+        }
+
         private void ExpireAllCookies()
         {
             if (HttpContext.Current != null)

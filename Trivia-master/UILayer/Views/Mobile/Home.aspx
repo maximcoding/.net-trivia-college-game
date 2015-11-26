@@ -4,22 +4,22 @@
     <title>Home Page</title>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-        <div data-role="page" id="homePage">
+    <div data-role="page" id="homePage">
 
-            <div class="alert" style="display: none">
-                <span id="alert"></span>
-            </div>
+        <div class="alert" style="display: none">
+            <span id="alert"></span>
+        </div>
 
-            <div data-role="main" class="ui-content">
-                <div id="heading-1" class="ui-body ui-body-a ui-corner-all">
-                    <div data-role="header" class="page-header logo">
-                        <h3>
-                            <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
-                        </h3>
-                    </div>
+        <div data-role="main" class="ui-content">
+            <div id="heading-1" class="ui-body ui-body-a ui-corner-all">
+                <div data-role="header" class="page-header logo">
+                    <h3>
+                        <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+                    </h3>
                 </div>
-                <div data-role="controlgroup" id="loginbox" data-mini="true">
-                        <form role="form" id="loginForm" >
+            </div>
+            <div data-role="controlgroup" id="loginbox" data-mini="true">
+                <form role="form" id="loginForm">
                     <fieldset data-role="fieldcontain">
                         <label for="email">Email:</label>
                         <input type="email" name="email" id="emailLogin" class="required email">
@@ -36,28 +36,28 @@
                     </fieldset>
 
                     <input type="submit" value="Login" />
-                            </form>
-                    <div class="fieldgroup">
-                        <h4>
-                            <a href="#registerPage" data-rel="internal" id="link-1">Need An Account?</a>
-                        </h4>
-                    </div>
-                    <br>
+                </form>
+                <div class="fieldgroup">
+                    <h4>
+                        <a href="#registerPage" data-rel="internal" id="link-1">Need An Account?</a>
+                    </h4>
                 </div>
+                <br>
             </div>
         </div>
+    </div>
 
 
-        <div data-role="page" id="registerPage">
-            <div data-role="main" class="ui-content">
-                <div id="heading-2" class="ui-body ui-body-a ui-corner-all">
-                    <div data-role="header" class="page-header logo">
-                        <h3>
-                            <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
-                        </h3>
-                    </div>
-                    <div class="ui-body ui-body-a ui-corner-all">
-                        <div data-role="controlgroup" id="buttons2" data-mini="true">
+    <div data-role="page" id="registerPage">
+        <div data-role="main" class="ui-content">
+            <div id="heading-2" class="ui-body ui-body-a ui-corner-all">
+                <div data-role="header" class="page-header logo">
+                    <h3>
+                        <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+                    </h3>
+                </div>
+                <div class="ui-body ui-body-a ui-corner-all">
+                    <div data-role="controlgroup" id="buttons2" data-mini="true">
                         <form role="form" id="registerForm">
                             <fieldset data-role="fieldcontain">
                                 <label for="username">Username:</label>
@@ -86,17 +86,17 @@
                             <br>
 
                             <input type="submit" value="Register" id="registerButton">
-                            </form>
+                        </form>
+                        <div class="fieldgroup">
                             <div class="fieldgroup">
-                                <div class="fieldgroup">
-                                    <p>Already registered? <a href="#homePage">Sign in</a>.</p>
-                                </div>
+                                <p>Already registered? <a href="#homePage">Sign in</a>.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
     <script type="text/javascript">
@@ -105,6 +105,7 @@
         $('#loginForm').submit(sendJsonForm);
 
         function sendJsonForm(event) {
+            console.log('sending ..' + getRawJson(this));
             event.preventDefault();
             $.ajax({
                 async: true,

@@ -76,9 +76,5 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
     <%: Scripts.Render("~/javascript/myscripts") %>
     <script type="text/javascript">
-        // Load every time when before profile page opens
-        $(document).on("pagebeforeshow", "#profilePage", function () {
-            getFreshUserInfo();
-        });
     </script>
 </asp:Content>
