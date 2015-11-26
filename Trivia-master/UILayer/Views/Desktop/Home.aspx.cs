@@ -11,10 +11,17 @@ using DALayer.Services;
 using DALayer.Helpers;
 using App_Code.Helpers;
 
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+
 namespace TriviaGame.Views.Desktop
 {
     public partial class Home : System.Web.UI.Page
     {
+        private Guid uidForImage;
+        public Size OriginalImageSize { get; set; }        //Store original image size.
+        public Size NewImageSize { get; set; }
         private JsonHelper<Object> _jsonHelper = null;
         PlayerService _playerService = null;
         private CometClientProcessor _cometProcessor;
@@ -44,15 +51,16 @@ namespace TriviaGame.Views.Desktop
 
         protected void Register_Click(object sender, EventArgs e)
         {
+            uidForImage = Guid.NewGuid();
+            string fileName = System.IO.Path.GetFileName(PictureUpload.PostedFile.FileName);
             _playerService = new PlayerService();
             _jsonHelper = new JsonHelper<Object>();
-            string responseJSON = null;
             Player newPlayer = new Player();
             newPlayer.username = RegisterUsername.Text;
             newPlayer.email = RegisterEmail.Text;
             // kod zashivrovali v settere 
             newPlayer.password = RegisterPassword.Text;
-            newPlayer.image = "ehse netu picture";
+            newPlayer.image = uidForImage + fileName;
             newPlayer.registration_date = DateTime.Now;
 
             if (!_playerService.CheckIfExists(newPlayer))
@@ -60,6 +68,7 @@ namespace TriviaGame.Views.Desktop
                 // do stuff here to log the user in ... 
                 if (_playerService.Insert(newPlayer))
                 {
+                    UploadImage(sender, e);
                     Login(newPlayer.email, newPlayer.password);
                 }
             }
@@ -128,6 +137,59 @@ namespace TriviaGame.Views.Desktop
 
 
 
+        private void UploadImage(object sender, EventArgs e)
+        {
+            string imgPath = "~/Content/img/avatars/";
+            Alert.Text = "";
+            if ((PictureUpload.PostedFile != null) && (PictureUpload.PostedFile.ContentLength > 0))
+            {
+                string fileName = System.IO.Path.GetFileName(PictureUpload.PostedFile.FileName);
+                string SaveLocation = Server.MapPath(imgPath) + "" + uidForImage + fileName;
+                try
+                {
+                    string fileExtention = PictureUpload.PostedFile.ContentType;
+                    int fileLenght = PictureUpload.PostedFile.ContentLength;
+                    if (fileExtention == "image/png" || fileExtention == "image/jpeg" || fileExtention == "image/x-png")
+                    {
+                        if (fileLenght <= 1048576)
+                        {
+                            System.Drawing.Bitmap bmpPostedImage = new System.Drawing.Bitmap(PictureUpload.PostedFile.InputStream);
+                            System.Drawing.Image objImage = ScaleImage(bmpPostedImage, 81);
+                            // Saving image in jpeg format
+                            objImage.Save(SaveLocation, ImageFormat.Jpeg);
+                            Alert.Text = "The file has been uploaded.";
+                        }
+                        else
+                        {
+                            Alert.Text = "Image size cannot be more then 1 MB.";
+                        }
+                    }
+                    else
+                    {
+                        Alert.Text = "Invaild Format!";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Alert.Text = "Error: " + ex.Message;
+                }
+            }
+        }
+
+
+        // Resizes Images
+        public static System.Drawing.Image ScaleImage(System.Drawing.Image image, int maxHeight)
+        {
+            var ratio = (double)maxHeight / image.Height;
+            var newWidth = (int)(image.Width * ratio);
+            var newHeight = (int)(image.Height * ratio);
+            var newImage = new Bitmap(newWidth, newHeight);
+            using (var g = Graphics.FromImage(newImage))
+            {
+                g.DrawImage(image, 0, 0, newWidth, newHeight);
+            }
+            return newImage;
+        }
     }
 
 }

@@ -14,7 +14,7 @@
             <div id="heading-1" class="ui-body ui-body-a ui-corner-all">
                 <div data-role="header" class="page-header logo">
                     <h3>
-                        <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+                        <img class="displayed" style="border-radius: 50px" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
                     </h3>
                 </div>
             </div>

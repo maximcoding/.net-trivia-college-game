@@ -27,7 +27,7 @@
                         <div class="panel-heading">
                             <div class="panel-title" data-toggle="collapse"
                                 data-target="#collapseOne">
-                                <span class="label label-default" style="cursor: pointer">Personal Info</span>
+                                <h3 class="label label-default" style="cursor: pointer">Personal Info</h3>
                             </div>
                         </div>
 
@@ -57,7 +57,7 @@
                         <div class="panel-heading">
                             <div class="panel-title" data-toggle="collapse"
                                 data-target="#collapseTwo">
-                                <span class="label label-primary" style="cursor: pointer">Games Results</span>
+                                <h3 class="label label-primary" style="cursor: pointer">Games Results</h3>
                             </div>
                         </div>
                         <div id="collapseTwo" class="panel-collapse collapse in">

@@ -104,7 +104,6 @@ public class CometAsyncHandler : IHttpAsyncHandler, IHttpHandler, IRequiresSessi
                 _curAsyncResult.HttpContext.Session.Clear();
                 _curAsyncResult.HttpContext.Session.RemoveAll();
                 _curAsyncResult.HttpContext.Session.Abandon();
-                _curAsyncResult.HttpContext.Response.Redirect("Home.aspx",false); //true(default-stop thread)
                 _curAsyncResult.CompleteRequest();
                 break;
 

@@ -17,7 +17,7 @@
     <%: Styles.Render("~/css/Home") %>
 
     <div class="page-header text-center">
-        <img class="displayed" style="width: 10%" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+        <img class="displayed" style="width: 10%;border-radius: 50px" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
     </div>
 </head>
 <body>

@@ -5,6 +5,7 @@ var userId
 
 // GLOBAL PATH TO HANDLER
 var pathToHandler = "/CometAsyncHandler.ashx";
+var imgPath = "/Content/img/avatars/";
 
 var gameName
 var gameId
@@ -64,6 +65,20 @@ function startGame() {
     });
 }
 
+$(document).on('click', '#logout', function (e) {
+    e.preventDefault();
+    console.log('login out ...');
+        $.ajax({
+            async: true,
+            type: 'POST',
+            url: pathToHandler,
+            data: '{"categoryId":"' + gameId + '" , "command": "logout"}',
+            success: onSuccess,
+            error: startGame
+        });
+});
+
+
 //Fetch next question - if it wasn't last 
 function continueGame(trueOrFalse, score) {
     $(".alert").empty();
@@ -103,7 +118,6 @@ function getRawJson(form) {
 }
 
 function onSuccess(data) {
-    var alertOriginalState = $(".alert").clone();
     var result = JSON.parse(data);
     console.log(result);
     switch (result.status) {
@@ -111,6 +125,7 @@ function onSuccess(data) {
             alert(result.message);
             break;
         case 406: // registraion failed
+            var alertOriginalState = $(".alert").clone();
             $("#alert").append(result.message)
             $(".alert").fadeIn(1000, function () {
                 $(this).click(function () {
@@ -118,8 +133,15 @@ function onSuccess(data) {
                 });
             });
             break;
-
+        case 1000: // logout good bye message
+            $("#alert").append('<h2>' +result.message +'</h3>')
+            $(".alert").fadeIn(100, function () {
+                $(this).delay(1000);
+                $(location).attr('href', 'http://localhost:63408/Views/Mobile/Home.aspx');
+            });        
+            break;
         case 405: // registraion failed - email allready presents
+            var alertOriginalState = $(".alert").clone();
             $("#alert").append(result.message)
             $(".alert").fadeIn(1000, function () {
                 $(this).click(function () {
@@ -194,15 +216,15 @@ function onSuccess(data) {
 
         case 20: // if game ends 
             $('.alert')
-                .append('<div style="padding: 1%;padding-bottom:1%;margin-left:2%;">\n\
+                .append('<h3 id="alert">\n\
                 Right answered </br>' + result.objData.number_right_questions + '<br>\n\
                         Score for this Game </br>' + result.objData.score + '</div>')
-                .css({ 'background-color': 'rgba(151, 129, 125, 1)', 'font-size': '18px' })
+                .css({ 'background-color': '#554C1B', 'font-size': '18px' })
             $(".alert").fadeIn(1000, function () {
                 $(this).click(function () {
                     $('#gameContent').addClass('animated zoomOut').on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
                               function () { // removing animation when its end
-                                  $('.alert').replaceWith(alertOriginalState);
+                                  $(".alert").empty();
                                   $('#gameContent').removeClass('animated zoomOut');
                                   $('#gamesList').show(1000);
                                   $('#navbar').show(1000);
@@ -217,8 +239,10 @@ function onSuccess(data) {
             // and then fetch all player info for Profile Page 
             var UserInfo = '';
             $.each(result.userData, function (i, row) {
+
+
                 UserInfo += '<tr>\n\
-                           <td>' + row.Picture + '</td>\n\
+                           <td><img id="avatar" src="' + imgPath + row.Picture + '"></td>\n\
                            <td>' + row.Username + '</td>\n\
                            <td>' + row.Email + '</td>\n\
                            <td>' + myDateFormat(row.Registration_Date) + '</td>\n\
@@ -235,16 +259,16 @@ function onSuccess(data) {
             var gamesTable = '';
             $.each(result.userGamesData, function (i, row) {
                 var scoreHtml = '';
-                if (row.Score != 0) { // green if no zero 
-                    gamesTable += '<tr style="background-color:#B8FFA2">\n\
+                if (row.Score != 0) { 
+                    gamesTable += '<tr>\n\
                            <td>' + row.Game + '</td>\n\
                             <td>' + row.Score + '</td>\n\
                            <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
                            <td>' + row.Questions + '</td>\n\
                           </tr>';
                 }
-                else if(row.Score > 0 ){  //red if zero
-                    gamesTable += '<tr  style="background-color:#FF8C72">\n\
+                else if(row.Score > 0 ){ 
+                    gamesTable += '<tr>\n\
                            <td>' + row.Game + '</td>\n\
                             <td>' + row.Score + '</td>\n\
                            <td>' + myDateFormat(row.DatePlayer) + '</td>\n\
@@ -278,10 +302,12 @@ $(document).on('click', '#closeAnsDiv .questionBtn', function () {
                        //    var lastClass = clickedButton.attr('class').split(' ').pop();
                        console.log(randomAnim);
                        clickedButton.removeClass(randomAnim);
-                       $(".alert").append("<p/>").css({ 'background-color': 'rgba(184, 218, 44, 0.9)', 'color': 'white', 'font-size': '26px' }).text('Right!');
+                       $(".alert").append('<h2 id="alert" style="background-color:rgba(184, 218, 44, 0.9)"> Right! </h3>')
+                  //     $(".alert").append("<h3/>").css({ 'background-color': 'rgba(184, 218, 44, 0.9)', 'color': 'white', 'font-size': '26px' }).text('Right!');
                        $(".alert").fadeIn(700, function () {
                            $(this).delay(800);
                            $(this).fadeOut(500, function () {
+                               $(".alert").empty();
                                continueGame(true, scoreForQuestion)
                            });
                        });
@@ -297,10 +323,13 @@ $(document).on('click', '#closeAnsDiv .questionBtn', function () {
                         // var lastClass = clickedButton.attr('class').split(' ').pop();
                         console.log(randomAnim);
                         clickedButton.removeClass(randomAnim);
-                        $(".alert").append("<p/>").css({ 'background-color': 'rgba(255, 0, 0, 0.4)', 'color': 'white', 'font-size': '26px' }).text('Wrong!');
+                        var cloneAlert = $("#alert").clone();
+                        $(".alert").append('<h2 id="alert" style="background-color:rgba(255, 0, 0, 0.4)"> Wrong! </h3>')
+                   //     $(".alert").append("<h3/>").css({ 'background-color': 'rgba(255, 0, 0, 0.4)', 'color': 'white', 'font-size': '26px' }).text('Wrong!');
                         $(".alert").fadeIn(700, function () {
                             $(this).delay(800);
                             $(this).fadeOut(500, function () {
+                                $(".alert").empty();
                                 continueGame(true, 0)
                             });
                         });
@@ -325,19 +354,21 @@ $(document).keypress(function (e) {
         });
         var found = $.inArray(enteredText, answersArr) > -1;
         if (found) {
-            $(".alert").append("<p/>").css({ 'background-color': 'rgba(184, 218, 44, 0.9)', 'color': 'white', 'font-size': '26px' }).text('Right!');
+            $(".alert").append('<h2 id="alert" style="background-color:rgba(184, 218, 44, 0.9)"> Right! </h3>')
             $(".alert").fadeIn(700, function () {
                 $(this).delay(800);
                 $(this).fadeOut(500, function () {
+                    $(".alert").empty();
                     continueGame(true, scoreForQuestion)
                 });
             });
         }
         else {
-            $(".alert").append("<p/>").css({ 'background-color': 'rgba(255, 0, 0, 0.4)', 'color': 'white', 'font-size': '26px' }).text('Wrong !');
+            $(".alert").append('<h2 id="alert" style="background-color:rgba(255, 0, 0, 0.4)"> Wrong! </h3>')
             $(".alert").fadeIn(700, function () {
                 $(this).delay(800);
                 $(this).fadeOut(500, function () {
+                    $(".alert").empty();
                     continueGame(true, scoreForQuestion)
                 });
             });
@@ -369,6 +400,8 @@ function myDateFormat(date) {
 $(document).on("pagebeforeshow", "#profilePage", function () {
     getFreshUserInfo();
 });
+
+
 
 
 

@@ -9,7 +9,7 @@
         <div data-role="main" class="ui-content">
             <div data-role="header" class="page-header logo">
                 <h3>
-                    <img class="displayed" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+                    <img class="displayed" src="/Content/img/SmartTrivia.png" style="border-radius: 50px" alt="SmartTriviaS" />
                 </h3>
             </div>
             <div data-role="navbar" id="navbar" class="mobile-navbar">
@@ -17,12 +17,12 @@
                     <li><a href="/Views/Mobile/Profile.aspx" data-icon="user" data-transition="pop">Profile</a></li>
                     <li><a href="/Views/Mobile/Contact.aspx" data-icon="mail" data-transition="pop">Write us</a></li>
                     <li><a href="/Views/Mobile/About.aspx" data-icon="info" data-transition="pop">About</a></li>
-                    <li><a href="/Views/Mobile/Home.aspx" data-icon="lock" data-transition="pop">Logout</a></li>
+                    <li><a href="#" data-icon="lock" data-transition="pop"  id="logout">Logout</a></li>
 
                 </ul>
             </div>
             <div class="alert" style="display: none">
-                <span id="alert"></span>
+                <div id="alert"></div>
             </div>
             <div id="gamesList">
                 <ul class="nav" id="scrollNavigator">

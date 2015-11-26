@@ -13,7 +13,8 @@
                     <li><a runat="server" href="~/Views/Desktop/About.aspx">About</a></li>
                     <li><a runat="server" href="~/Views/Desktop/Home.aspx">Login</a></li>
                 </ul>
-             <h4><asp:Literal runat="server" ID="Alert" /></h4>
+                <h4>
+                    <asp:Literal runat="server" ID="Alert" /></h4>
             </div>
             <asp:MultiView ID="MultiView" runat="server" ActiveViewIndex="0">
 
@@ -22,7 +23,9 @@
                     <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
                         <div class="panel">
-                            <div class="text text-center">Login</div>
+                            <div class="text text-center" id="logRegH2">
+                                <h2>Login</h2>
+                            </div>
                             <div style="padding-top: 30px" class="panel-body">
 
                                 <div style="margin-bottom: 25px" class="input-group">
@@ -69,10 +72,11 @@
                                 <div class="form-group">
                                     <div class="col-md-12 control">
                                         <div style="border-top: 1px solid#888; padding-top: 15px; font-size: 85%">
-                                            Don't have an account!                                 
+                                            <h4>Don't have an account!                               
                                    <asp:LinkButton ID="MoveToRegisterView" runat="server"
                                        OnClick="MoveToRegisterView_Click">Register</asp:LinkButton>
                                         </div>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +90,9 @@
 
 
                         <div class="panel panel-info">
-                            <div class="text text-center">Sign Up</div>
+                            <div class="text text-center" id="logRegH2">
+                                <h2>Sign Up</h2>
+                            </div>
                             <div class="panel-body">
 
                                 <div style="margin-bottom: 25px" class="input-group">
@@ -137,6 +143,18 @@
                                     ForeColor="Red">
                                 </asp:RequiredFieldValidator>
 
+                                <div style="margin-bottom: 25px" class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-picture"></i>
+                                    </span>
+                                    <asp:FileUpload ID="PictureUpload" runat="server" CssClass="btn btn-default btn-file" />
+                                </div>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server"
+                                    ControlToValidate="PictureUpload"
+                                    ValidationGroup="RegisterGroup"
+                                    ErrorMessage="Please Upload Your Photo"
+                                    ForeColor="Red">
+                                </asp:RequiredFieldValidator>
+
                                 <!--Register Button -->
                                 <div class="form-group">
                                     <div id="btn-register">
@@ -148,18 +166,20 @@
                                             OnClick="Register_Click"
                                             CssClass="btn btn-block login"
                                             CausesValidation="true"
-                                            ValidationGroup="RegisterGroup" />
+                                            ValidationGroup="RegisterGroup">
+                                        </asp:Button>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12 control">
                                         <div style="border-top: 1px solid#888; padding-top: 15px; font-size: 85%">
-                                            Back to                                                                                          
+                                            <h4>Back to                                                                                          
                                         <asp:LinkButton ID="BackToLoginView"
                                             runat="server"
                                             OnClick="BackToLoginView_Click"
                                             CausesValidation="false">Login
                                         </asp:LinkButton>
+                                            </h4>
                                         </div>
                                     </div>
                                 </div>
