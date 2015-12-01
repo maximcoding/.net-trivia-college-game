@@ -10,18 +10,17 @@ ________________________________
 --------------
 Used in code :
 IAsyncHttpHandler,Session,Cookies,MultiView,Validators,BundleConfig,Master Pages.
-Json Helper Class named as JsonHelper.css for retrieving list ob objects in JSON format
+Json Helper Class named as JsonHelper.cs for retrieving list ob objects in JSON format
 ________________________________
--------------
+
 
 SERVER SIDE CODE (Contains Models And Data Access Objects to each Model)  
 _______________________________
 Placed in directory  : Trivia-Master - DALayer
---------------
 Used in code :
 Stored Procedures ,Models,Dataset,Datatables,SqlConnection.
 ______________________________
-DTableExtension.css > generic helper class using for creating dynamically instance of models with it individual properties .
+DTableExtension.cs > generic helper class using for creating dynamically instance of models with it individual properties .
 
 
 
