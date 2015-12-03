@@ -121,9 +121,6 @@ function onSuccess(data) {
     var result = JSON.parse(data);
     console.log(result);
     switch (result.status) {
-        case 404: // user not found
-            alert(result.message);
-            break;
         case 406: // registraion failed
             var alertOriginalState = $(".alert").clone();
             $("#alert").append(result.message)
@@ -164,6 +161,7 @@ function onSuccess(data) {
 
         case 10: // continue game
             answerList = new Array();
+            $('.alert').empty();
             $('#gamesList').hide(1000);
             $('#navbar').hide(1000);
             $('#gameContent').fadeIn(2000);

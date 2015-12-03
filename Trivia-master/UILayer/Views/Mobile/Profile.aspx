@@ -38,35 +38,13 @@
                                         <th data-priority="4">Total Score</th>
                                         <th data-priority="5">Avg Score</th>
                                         <th data-priority="6">Games</th>
-                                        <th data-priority="7"><abbr title="Rotten Tomato Place">Place</abbr></th>
+                                        <th data-priority="7">
+                                            <abbr title="Rotten Tomato Place">Place</abbr></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
-
-                            <table data-role="table" id="movie-table" data-mode="reflow" class="ui-responsive">
-                                <thead>
-                                    <tr>
-                                        <th data-priority="1">Rank</th>
-                                        <th data-priority="persist">Movie Title</th>
-                                        <th data-priority="2">Year</th>
-                                        <th data-priority="3">
-                                            <abbr title="Rotten Tomato Rating">Rating</abbr></th>
-                                        <th data-priority="4">Reviews</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td><a href="http://en.wikipedia.org/wiki/Citizen_Kane" data-rel="external">Citizen Kane</a></td>
-                                        <td>1941</td>
-                                        <td>100%</td>
-                                        <td>74</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
                         </div>
                     </div>
                 </div>
@@ -89,6 +67,13 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="footing-2" class="ui-corner-all">
+            <div data-role="footer" class="page-footer">
+                <p>
+                    <h3>&copy; <%: DateTime.Now.Year %> Dani Livshitz</h3>
+                </p>
             </div>
         </div>
     </div>

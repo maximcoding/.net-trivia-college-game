@@ -13,6 +13,10 @@ using System.Web.UI;
 using System.Data;
 using System.Web.SessionState;
 
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+
 using App_Code.Helpers;
 using DALayer.Models;
 using CometAsyncCode;
@@ -27,6 +31,7 @@ public class CometAsyncHandler : IHttpAsyncHandler, IHttpHandler, IRequiresSessi
     private JsonHelper<Object> _jsonHelper = null;
     PlayerService _playerService = null;
     private CometClientProcessor _cometProcessor;
+    private Guid uidForImage;
 
     static CometAsyncHandler()
     {
@@ -55,13 +60,53 @@ public class CometAsyncHandler : IHttpAsyncHandler, IHttpHandler, IRequiresSessi
         CometAsyncResult _curAsyncResult = state as CometAsyncResult;
         JavaScriptSerializer serializer = new JavaScriptSerializer();
         CometClientProcessor _cometProcessor = new CometClientProcessor();
+
+
+
+        _curAsyncResult.HttpContext.Response.ContentType = "text/plain";
+        try
+        {
+            uidForImage = new Guid();
+            string dirFullPath = _curAsyncResult.HttpContext.Server.MapPath("~/Content/img/avatars/");
+            string[] files;
+            int numFiles;
+            files = System.IO.Directory.GetFiles(dirFullPath);
+            numFiles = files.Length;
+            numFiles = numFiles + 1;
+            string str_image = "";
+            string imgPath = "~/Content/img/avatars/";
+            foreach (string s in currentAsyncRequestState.HttpContext.Request.Files)
+            {
+                HttpPostedFile file = _curAsyncResult.HttpContext.Request.Files[s];
+                string fileName = file.FileName;
+                string fileExtension = file.ContentType;
+
+                if (!string.IsNullOrEmpty(fileName))
+                {
+
+                    fileExtension = Path.GetExtension(fileName);
+                    str_image = "MyPHOTO_" + numFiles.ToString() + fileExtension;
+                    string _saveLocation = _curAsyncResult.HttpContext.Server.MapPath(imgPath) + "" + uidForImage + fileName;
+             //       string pathToSave_100 = _curAsyncResult.HttpContext.Server.MapPath(imgPath) + str_image;
+                    file.SaveAs(_saveLocation);
+                }
+            }
+            //  database record update logic here  ()
+
+            _curAsyncResult.HttpContext.Response.Write(str_image);
+        }
+        catch (Exception ac)
+        {
+
+        }
+
+
+
         _curAsyncResult.HttpContext.Request.InputStream.Position = 0;
         string jsonRequest = new StreamReader(_curAsyncResult.HttpContext.Request.InputStream).ReadToEnd();
         Dictionary<string, string> values = serializer.Deserialize<Dictionary<string, string>>(jsonRequest);
 
-
         string command = values["command"];
-
         switch (command)
         {
             case "CONNECT":
@@ -293,6 +338,20 @@ public class CometAsyncHandler : IHttpAsyncHandler, IHttpHandler, IRequiresSessi
 
     public void ProcessRequest(HttpContext context)
     {
+    }
+
+    // Resizes Images
+    public static System.Drawing.Image ScaleImage(System.Drawing.Image image, int maxHeight)
+    {
+        var ratio = (double)maxHeight / image.Height;
+        var newWidth = (int)(image.Width * ratio);
+        var newHeight = (int)(image.Height * ratio);
+        var newImage = new Bitmap(newWidth, newHeight);
+        using (var g = Graphics.FromImage(newImage))
+        {
+            g.DrawImage(image, 0, 0, newWidth, newHeight);
+        }
+        return newImage;
     }
 
 }

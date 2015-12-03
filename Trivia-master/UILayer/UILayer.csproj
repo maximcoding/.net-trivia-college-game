@@ -398,6 +398,7 @@
     <Content Include="Content\css\Registration.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\fauna.png" />
+    <Content Include="Content\img\game\annas.jpg" />
     <Content Include="Content\img\game\beatles.png" />
     <Content Include="Content\img\game\beonce.jpg" />
     <Content Include="Content\img\game\churchill.png" />
@@ -405,8 +406,12 @@
     <Content Include="Content\img\game\clavesin.jpg" />
     <Content Include="Content\img\game\jimi.jpg" />
     <Content Include="Content\img\game\lennon.jpg" />
+    <Content Include="Content\img\game\mexxx.jpg" />
     <Content Include="Content\img\game\michael.jpg" />
     <Content Include="Content\img\game\nirvana.jpg" />
+    <Content Include="Content\img\game\sea.jpg" />
+    <Content Include="Content\img\game\soda.JPG" />
+    <Content Include="Content\img\game\VictoriaDesert.jpg" />
     <Content Include="Content\img\geo.png" />
     <Content Include="Content\img\history.png" />
     <Content Include="Content\img\music.png" />

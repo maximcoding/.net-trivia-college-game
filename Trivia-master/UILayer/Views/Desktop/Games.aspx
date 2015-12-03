@@ -52,9 +52,12 @@
             </div>
         </div>
     </form>
+    <footer class="footer text-center">
+        <p id="desktopFooter">&copy; <%: DateTime.Now.Year %> Dani Livshitz</p>
+    </footer>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
-        <%: Scripts.Render("~/javascript/scrollAndRotate") %>
+    <%: Scripts.Render("~/javascript/scrollAndRotate") %>
     <script type="text/javascript">
         // When every window opens - its connecting
         $(document).ready(function () {

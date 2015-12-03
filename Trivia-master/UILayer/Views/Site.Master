@@ -15,18 +15,16 @@
     <%: Scripts.Render("~/javascript/Comet") %>
     <%: Styles.Render("~/css/animate") %>
     <%: Styles.Render("~/css/Home") %>
-
-    <div class="page-header text-center">
-        <img class="displayed" style="width: 10%;border-radius: 50px" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+    <div class="container-fluid">
+        <div class="page-header text-center">
+            <img class="displayed" style="width: 10%; border-radius: 50px" src="/Content/img/SmartTrivia.png" alt="SmartTriviaS" />
+        </div>
     </div>
 </head>
 <body>
     <asp:ContentPlaceHolder ID="MainContent" runat="server">
     </asp:ContentPlaceHolder>
     <asp:ContentPlaceHolder ID="ScriptsContent" runat="server">
-        <footer class="text-center">
-            <p>&copy; <%: DateTime.Now.Year %> Livshitz</p>
-        </footer>
     </asp:ContentPlaceHolder>
 </body>
 </html>

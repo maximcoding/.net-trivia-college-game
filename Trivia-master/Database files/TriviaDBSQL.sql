@@ -1,7 +1,7 @@
 USE [master]
 GO
 
-/****** Object:  Database [TRIVIA_DB]    Script Date: 20/11/2015 09:59:04 ******/
+/****** Object:  Database [TRIVIA_DB]    Script Date: 03/12/2015 12:27:25 ******/
 CREATE DATABASE [TRIVIA_DB]
  CONTAINMENT = NONE
  ON  PRIMARY 

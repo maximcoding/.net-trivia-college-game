@@ -81,11 +81,14 @@
             </div>
         </div>
     </form>
+    <footer class="footer text-center">
+        <p id="desktopFooter">&copy; <%: DateTime.Now.Year %> Dani Livshitz</p>
+    </footer>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ScriptsContent" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {
-        //    $('#gameContent').hide();
+            //    $('#gameContent').hide();
             getFreshUserInfo();
         });
         var active = true;
