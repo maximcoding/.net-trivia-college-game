@@ -5,13 +5,13 @@ Mobile and Desktop Application
 ___________________________
 #### Technologies: ####
 
-[x]C#, 
-[x]ADO.NET, 
-[x]Win Forms, 
-[x]jQuery Mobile, 
-[x]Bootstrap, 
-[x]CSS3 Animations, 
-[x] MS Server Database 
+- [x] C#, 
+- [x] ADO.NET, 
+- [x] Win Forms, 
+- [x] jQuery Mobile, 
+- [x] Bootstrap, 
+- [x] CSS3 Animations, 
+- [x] MS Server Database 
 ________________________
 
 ``` /Trivia-Master ```  - UILayer
